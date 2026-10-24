@@ -163,3 +163,9 @@ button { cursor: pointer; border: none; background: none; }
 .stack { display: flex; flex-direction: column; gap: 12px; }
 .fade-in { animation: fadeIn 0.25s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.capture-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.capture-hint { color: var(--text-muted); font-size: 0.8125rem; line-height: 1.6; margin: 12px 0; overflow-wrap: anywhere; }
+.capture-error { color: var(--danger); font-size: 0.875rem; margin: 12px 0; }
+.capture-upload { display: flex; position: relative; align-items: center; justify-content: center; min-height: 100px; border: 2px dashed var(--accent); border-radius: 12px; color: var(--accent); cursor: pointer; }
+.capture-upload input { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
+.capture-upload:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }

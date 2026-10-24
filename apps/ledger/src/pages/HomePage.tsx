@@ -4,7 +4,7 @@ import { TransactionItem } from "../components/TransactionItem";
 import { calcBudgetStatus } from "../finance";
 import { formatMoney, isCurrentMonth } from "../utils";
 
-export function HomePage({ state }: { state: AppState }) {
+export function HomePage({ state, onCapture }: { state: AppState; onCapture: (mode: "voice" | "image") => void }) {
   const status = calcBudgetStatus(state.settings, state.transactions);
   const monthTx = state.transactions
     .filter((t) => isCurrentMonth(t.date))
@@ -19,6 +19,14 @@ export function HomePage({ state }: { state: AppState }) {
 
   return (
     <div className="fade-in">
+      <div className="card">
+        <div className="section-title">说一句，拍一张，自动记账</div>
+        <div className="capture-actions">
+          <button className="btn btn--primary" onClick={() => onCapture("voice")}>🎙 语音记账</button>
+          <button className="btn btn--ghost" onClick={() => onCapture("image")}>📷 图片记账</button>
+        </div>
+        <p className="capture-hint">自动识别金额、日期和消费分类，确认即可入账。</p>
+      </div>
       <div className="card card--accent">
         <div style={{ fontSize: "0.8125rem", opacity: 0.85 }}>本月支出</div>
         <div style={{ fontSize: "2rem", fontWeight: 700, margin: "4px 0" }}>¥{formatMoney(status.spent)}</div>
@@ -65,7 +73,7 @@ export function HomePage({ state }: { state: AppState }) {
       <div className="card" style={{ marginTop: 12 }}>
         <div className="section-title">最近消费</div>
         {monthTx.length === 0 ? (
-          <div className="empty" style={{ padding: "20px 0" }}>暂无记录，点 ＋ 记一笔</div>
+          <div className="empty" style={{ padding: "20px 0" }}>暂无记录，说一句消费或上传一张账单开始记账</div>
         ) : (
           monthTx.map((tx) => <TransactionItem key={tx.id} tx={tx} />)
         )}

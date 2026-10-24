@@ -1,5 +1,5 @@
 export type PaymentMethod = "alipay" | "wechat" | "cash" | "card" | "other";
-export type TransactionSource = "manual" | "import";
+export type TransactionSource = "manual" | "import" | "voice" | "image";
 export type Category =
   | "food"
   | "transport"

@@ -1,4 +1,5 @@
 import path from "node:path";
+import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
@@ -29,7 +30,9 @@ export default defineConfig(({ mode }) => ({
   base: lifestyleBase(mode),
   resolve: {
     alias: {
-      "lifestyle-sync": path.resolve(root, "../../packages/lifestyle-sync/src/index.ts"),
+      "lifestyle-sync": existsSync(path.resolve(root, "../../packages/lifestyle-sync/src/index.ts"))
+        ? path.resolve(root, "../../packages/lifestyle-sync/src/index.ts")
+        : path.resolve(root, "../../node_modules/lifestyle-sync/src/index.ts"),
     },
   },
   preview: lifestylePreview(5177, true),

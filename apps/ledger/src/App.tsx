@@ -1,3 +1,4 @@
+import { CaptureModal } from "./components/CaptureModal";
 import { useState } from "react";
 import { AddTxModal, ImportModal } from "./components/Modals";
 import { Navigation } from "./components/Navigation";
@@ -16,6 +17,7 @@ export default function App() {
     useLedgerStore();
   const [page, setPage] = useState<Page>("home");
   const [addOpen, setAddOpen] = useState(false);
+  const [captureMode, setCaptureMode] = useState<"voice" | "image" | null>(null);
   const [importOpen, setImportOpen] = useState(false);
 
   if (!state.settings.setupComplete) {
@@ -58,7 +60,7 @@ export default function App() {
       </header>
 
       <main className="app-main">
-        {page === "home" && <HomePage state={state} />}
+        {page === "home" && <HomePage state={state} onCapture={setCaptureMode} />}
         {page === "records" && (
           <RecordsPage state={state} onDelete={deleteTransaction} onImportClick={() => setImportOpen(true)} />
         )}
@@ -74,9 +76,10 @@ export default function App() {
         {page === "invest" && <InvestPage settings={state.settings} transactions={state.transactions} />}
       </main>
 
-      <button className="fab" onClick={() => setAddOpen(true)} aria-label="记一笔">+</button>
+      <button className="fab" onClick={() => setCaptureMode("voice")} aria-label="语音记账">🎙</button>
       <Navigation current={page} onChange={setPage} />
 
+      {captureMode && <CaptureModal key={captureMode} mode={captureMode} onClose={() => setCaptureMode(null)} onSave={addTransaction} onManual={() => { setCaptureMode(null); setAddOpen(true); }} />}
       <AddTxModal open={addOpen} onClose={() => setAddOpen(false)} onSave={addTransaction} />
       <ImportModal open={importOpen} onClose={() => setImportOpen(false)} onImport={handleImport} />
     </div>

@@ -23,6 +23,8 @@ export function TransactionItem({
           <span className="pay-badge" style={{ background: pay.color }}>{pay.icon}</span>
           {cat.label} · {formatShortDate(tx.date)}
           {tx.source === "import" && " · 导入"}
+          {tx.source === "voice" && " · 语音"}
+          {tx.source === "image" && " · 图片"}
         </div>
       </div>
       <div className="tx-item__amount">-¥{tx.amount.toFixed(2)}</div>
