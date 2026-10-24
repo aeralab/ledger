@@ -4,5 +4,43 @@
   "installCommand": "npm install",
   "framework": null,
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "headers": [
+    {
+      "headers": [
+        {
+          "value": "no-cache, no-store, must-revalidate",
+          "key": "Cache-Control"
+        }
+      ],
+      "source": "/sw.js"
+    },
+    {
+      "headers": [
+        {
+          "value": "no-cache, no-store, must-revalidate",
+          "key": "Cache-Control"
+        }
+      ],
+      "source": "/registerSW.js"
+    },
+    {
+      "headers": [
+        {
+          "value": "no-cache, no-store, must-revalidate",
+          "key": "Cache-Control"
+        }
+      ],
+      "source": "/api/update/:path*"
+    },
+    {
+      "headers": [
+        {
+          "value": "no-cache, must-revalidate",
+          "key": "Cache-Control"
+        }
+      ],
+      "source": "/"
+    }
+  ]
 }

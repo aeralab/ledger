@@ -30,3 +30,27 @@
 构建生成：
 - D:\OnePersonCompany\apps\ledger\apps\ledger\tsconfig.tsbuildinfo
 - D:\OnePersonCompany\apps\ledger\apps\ledger\dist\ （页面、资源、PWA 清单和 Service Worker）
+
+## 主屏幕应用更新修复（2026.10.24.2）
+
+新增联网更新页面 /api/update/，利用既有 /api/ 网络直通规则避开旧离线首页；等待新版 Service Worker 激活后返回应用。不会清除 localStorage、IndexedDB、登录状态或账目。新增版本标识、更新入口及应用返回前台时的更新检查；检测到新版时提示点击更新，避免自动刷新打断记账。为首页、更新页及 Service Worker 配置重新验证或禁止缓存响应头。
+
+真实 Chrome 独立浏览器回归通过：加载旧构建并让旧 Service Worker 控制页面，写入测试账目与储蓄，打开更新入口后成功显示新版，已有账目和储蓄保持原样。尚未在用户手机上确认。
+
+本次新增：
+- D:\OnePersonCompany\apps\ledger\apps\ledger\src\components\AppUpdate.tsx
+- D:\OnePersonCompany\apps\ledger\apps\ledger\public\api\update\index.html
+- D:\OnePersonCompany\apps\ledger\work\mobile-update-20261024\verify-update.mjs
+- D:\OnePersonCompany\apps\ledger\work\mobile-update-20261024\result.json
+- D:\OnePersonCompany\apps\ledger\work\mobile-update-20261024\chrome-profile\ （独立测试浏览器缓存与配置）
+
+本次修改：
+- D:\OnePersonCompany\apps\ledger\apps\ledger\src\App.tsx
+- D:\OnePersonCompany\apps\ledger\apps\ledger\src\index.css
+- D:\OnePersonCompany\apps\ledger\vercel.json
+- D:\OnePersonCompany\apps\ledger\VOICE-IMAGE-CHANGELOG.md
+
+重新生成：
+- D:\OnePersonCompany\apps\ledger\apps\ledger\dist\
+- D:\OnePersonCompany\apps\ledger\apps\ledger\tsconfig.tsbuildinfo
+- D:\OnePersonCompany\apps\ledger\.vercel\output\

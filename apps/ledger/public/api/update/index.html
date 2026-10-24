@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
+<title>更新智能记账</title>
+<style>
+body{font-family:system-ui,-apple-system,"PingFang SC",sans-serif;max-width:420px;margin:12vh auto;padding:24px;color:#37352f;background:#fff;line-height:1.7}
+h1{font-size:25px}p{color:#787774}button,a{font:inherit}button{width:100%;border:0;border-radius:10px;background:#0f7b6c;color:white;padding:14px;cursor:pointer}button:disabled{opacity:.55}a{color:#0f7b6c}#status{min-height:3em}
+</style>
+</head>
+<body>
+<h1>更新智能记账</h1>
+<p>语音图片版 · 2026.10.24.2</p>
+<p>更新应用界面，保留当前账目和登录信息。请先保存尚未确认的账目，再开始更新。</p>
+<button id="update">保留账目，更新应用</button>
+<p id="status" role="status" aria-live="polite">请联网后点击更新。</p>
+<a href="/">返回记账</a>
+<script>
+(function () {
+  var button = document.getElementById("update");
+  var status = document.getElementById("status");
+  button.addEventListener("click", async function () {
+    button.disabled = true;
+    status.textContent = "正在检查并下载新版，请稍候…";
+    try {
+      if (!navigator.onLine) throw new Error("当前没有网络，请联网后重试。");
+      if (!("serviceWorker" in navigator)) {
+        location.replace("/?release=20261024-2");
+        return;
+      }
+      var registration = await navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" });
+      await registration.update();
+      var deadline = Date.now() + 45000;
+      while (registration.installing || registration.waiting || !registration.active || registration.active.state !== "activated") {
+        if (Date.now() > deadline) throw new Error("更新尚未完成，请保持联网后重试。");
+        if (registration.waiting) registration.waiting.postMessage({ type: "SKIP_WAITING" });
+        await new Promise(function (resolve) { setTimeout(resolve, 200); });
+      }
+      status.textContent = "更新完成，正在打开语音图片版…";
+      location.replace("/?release=20261024-2");
+    } catch (error) {
+      status.textContent = error.message || "更新失败，请稍后重试。账目未作修改。";
+      button.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>

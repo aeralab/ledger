@@ -1,3 +1,4 @@
+import { AppUpdate } from "./components/AppUpdate";
 import { CaptureModal } from "./components/CaptureModal";
 import { useState } from "react";
 import { AddTxModal, ImportModal } from "./components/Modals";
@@ -25,6 +26,7 @@ export default function App() {
       <div className="app-shell">
         <header className="app-header">
           <h1 className="app-header__title">智能记账</h1>
+          <AppUpdate />
           <p className="app-header__subtitle">收支管理 · 预算规划 · 理财建议</p>
         </header>
         <main className="app-main">
@@ -56,6 +58,7 @@ export default function App() {
     <div className="app-shell">
       <header className="app-header">
         <h1 className="app-header__title">智能记账</h1>
+          <AppUpdate />
         <p className="app-header__subtitle">{subtitles[page]}</p>
       </header>
 

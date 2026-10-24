@@ -169,3 +169,5 @@ button { cursor: pointer; border: none; background: none; }
 .capture-upload { display: flex; position: relative; align-items: center; justify-content: center; min-height: 100px; border: 2px dashed var(--accent); border-radius: 12px; color: var(--accent); cursor: pointer; }
 .capture-upload input { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
 .capture-upload:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
+.app-update { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 0.75rem; color: var(--text-muted); margin: 6px 0; }
+.app-update a { color: var(--accent); text-decoration: underline; padding: 4px 0; }
